@@ -3,6 +3,7 @@ CREATE DATABASE Forum;
 CREATE TABLE IF NOT EXISTS Users(
     UserId SERIAL PRIMARY KEY,
     Name TEXT UNIQUE NOT NULL,
+    Password TEXT NOT NULL,
     Email TEXT UNIQUE NOT NULL
 );
 
@@ -22,6 +23,11 @@ CREATE TABLE IF NOT EXISTS Comments(
     Comment TEXT NOT NULL
 );
 
+CREATE PROCEDURE LoginCheck(name STRING, password TEXT)
+LANGUAGE SQL
+AS $$
+    SELECT 1==count(*) from Users where Users.Name = name && Users.Password = password
+END $$;
 
 -- ALL Get PROCEDURES
 CREATE PROCEDURE GetEmails()
