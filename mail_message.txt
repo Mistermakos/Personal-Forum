@@ -1,0 +1,11 @@
+Hi there,
+
+We've just published a brand new post on our website: {TITLE}!
+
+Make sure to check it out and stay up-to-date with the latest insights, tips, and updates we have for you.
+
+Thank you for being part of our community!
+
+Best regards,
+[Your Company/Team Name]
+

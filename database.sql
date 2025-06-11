@@ -3,25 +3,33 @@ CREATE DATABASE Forum;
 CREATE TABLE IF NOT EXISTS Users(
     UserId SERIAL PRIMARY KEY,
     Name TEXT UNIQUE NOT NULL,
+    Password TEXT NOT NULL,
     Email TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Admins(
-    UserId SERIAL REFERENCES Users(UserId)
+    UserId INTEGER PRIMARY KEY REFERENCES Users(UserId)
 );
 
 CREATE TABLE IF NOT EXISTS Posts(
     PostId SERIAL PRIMARY KEY,
+    UserId INTEGER REFERENCES Users(UserId),
     Title TEXT NOT NULL,
     PostContent TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Comments(
-    UserId SERIAL REFERENCES Users(UserId),
-    PostId SERIAL REFERENCES Posts(PostId),
+    CommentId SERIAL PRIMARY KEY,
+    UserId INTEGER REFERENCES Users(UserId),
+    PostId INTEGER REFERENCES Posts(PostId),
     Comment TEXT NOT NULL
 );
 
+CREATE PROCEDURE LoginCheck(name TEXT, password TEXT)
+LANGUAGE SQL
+AS $$
+    SELECT COUNT(*) FROM Users WHERE Name = name AND Password = password;
+END $$;
 
 -- ALL Get PROCEDURES
 CREATE PROCEDURE GetEmails()
@@ -66,17 +74,18 @@ AS $$
 END $$;
 
 -- ALL Add PROCEDURES
-CREATE PROCEDURE AddPost(Title TEXT, PostContent TEXT)
+CREATE PROCEDURE AddPost(IN p_UserId INTEGER, IN p_Title TEXT, IN p_PostContent TEXT)
 LANGUAGE SQL
 AS $$
-    INSERT INTO POST VALUES (NULL, Title, PostContent );
-END $$;
+    INSERT INTO Posts (UserId, Title, PostContent) VALUES (p_UserId, p_Title, p_PostContent);
+$$;
 
-CREATE PROCEDURE AddComment(UserId SERIAL, PostId SERIAL, Comment TEXT);
+CREATE PROCEDURE AddComment(IN p_UserId INTEGER, IN p_PostId INTEGER, IN p_Comment TEXT)
 LANGUAGE SQL
 AS $$
-    INSERT INTO Comments VALUES (UserId SERIAL, PostId SERIAL, Comment TEXT);
-END $$;
+    INSERT INTO Comments (UserId, PostId, Comment) VALUES (p_UserId, p_PostId, p_Comment);
+$$;
+
 
 CREATE PROCEDURE AddAdmin(UserId SERIAL)
 LANGUAGE SQL
@@ -84,20 +93,21 @@ AS $$
     INSERT INTO Admins VALUES (UserId);
 END $$;
 
-CREATE PROCEDURE AddUser(Name TEXT, Email TEXT)
+CREATE PROCEDURE AddUser(IN p_Name TEXT, IN p_Password TEXT, IN p_Email TEXT)
 LANGUAGE SQL
 AS $$
-    INSERT INTO POST VALUES (Name, Email);
-END $$;
+    INSERT INTO Users (Name, Password, Email) VALUES (p_Name, p_Password, p_Email);
+$$;
+
 
 -- All Delete Procedures
 
 CREATE PROCEDURE DeleteComment(UserId SERIAL, PostId SERIAL)
 LANGUAGE SQL
 AS $$
-    DELETE *
+    DELETE
     FROM Comments
-    WHERE Comments.UserId = UserId && Comments.PostId = PostId;
+    WHERE Comments.UserId = UserId AND Comments.PostId = PostId;
 END $$;
 
 CREATE PROCEDURE DeletePost(PostId SERIAL)
