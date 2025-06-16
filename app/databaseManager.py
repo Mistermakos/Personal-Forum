@@ -7,7 +7,7 @@ def create_connection():
     connection = None
     try:
         connection = sqlite3.connect(db_file)
-        print(f"Połączenie z bazą SQLite '{db_file}' zostało nawiązane")
+        print(f"Success'{db_file}' ")
     except sqlite3.Error as e:
-        print(f"Wystąpił błąd: {e}")
+        print(f"Error: {e}")
     return connection

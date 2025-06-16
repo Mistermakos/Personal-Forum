@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 
-# Instalacja zależności z requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app/ ./
