@@ -4,10 +4,10 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 
-#Installs all packages from requirements.txt, optimized 
-RUN pip install -r requirements.txt
+# Instalacja zależności z requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-copy app/ ./
+COPY app/ ./
 
 EXPOSE 5000
 

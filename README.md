@@ -9,4 +9,4 @@ Stack:
 - Docker
 - Python
     - Flask
-- PostgreSQL
+- SQLite
