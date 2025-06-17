@@ -1,15 +1,25 @@
-from Model.comment_model import Comment
+from Models.comment_model import Comment
 
-def get_comments_from_post(postId: int):
-    return "Comments under post"
+def get_all_comments():
+    return Comment.get_all()
 
-def get_comments_from_user(userId: int):
-    return "Comments from user"
+def get_comment(comment_id):
+    return Comment.get_by_id(comment_id)
 
-def add_new_comment(postId: int, userId: int, comment: str):
-    new_comment = Comment(UserId=userId,PostId=postId,CommentText=comment)
-    return "Added new comment with success"
+def create_comment(data):
+    comment = Comment(data.get('user_id'), data.get('post_id'), data.get('comment_text'))
+    comment.save()
+    return comment
 
-# User may post more than 1 comment, so comment variable is also needed
-def delete_comment(postId: int, userId: int, comment: str):
-    return "deleted comment"
+def update_comment(comment_id, data):
+    comment = Comment.get_by_id(comment_id)
+    if not comment:
+        return None
+    comment.user_id = data.get('user_id', comment.user_id)
+    comment.post_id = data.get('post_id', comment.post_id)
+    comment.comment_text = data.get('comment_text', comment.comment_text)
+    comment.save()
+    return comment
+
+def delete_comment(comment_id):
+    Comment.delete(comment_id)

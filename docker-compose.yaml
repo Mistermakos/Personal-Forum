@@ -1,12 +1,16 @@
 version: "3.9"
 services:
   web:
-    build: ./
-    container_name: App
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flask_app
     ports:
-      - 5000:5000
+      - "5000:5000"
     volumes:
-      - ./app:/usr/src/app
-      - ./data:/usr/src/app/data
+      - ./app:/usr/src/app/app
+      - ./data:/usr/src/app/data  
     env_file:
       - .env
+    environment:
+      - FLASK_ENV=production
