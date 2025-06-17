@@ -1,13 +1,19 @@
 import sqlite3
 import os
 
-def create_connection():
-    db_file = os.getenv("SQLITE_DB_FILE")
+DB_FILENAME = os.path.join("data", "database.db")
+SQL_SCRIPT  = os.path.join("data", "database.sql")
 
-    connection = None
-    try:
-        connection = sqlite3.connect(db_file)
-        print(f"Success'{db_file}' ")
-    except sqlite3.Error as e:
-        print(f"Error: {e}")
-    return connection
+def get_connection():
+    conn = sqlite3.connect(DB_FILENAME)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def init_db():
+    # it creates db only if one does not exit
+    if not os.path.exists(DB_FILENAME):
+        conn = get_connection()
+        with open(SQL_SCRIPT, 'r', encoding='utf-8') as f:
+            conn.executescript(f.read())
+        conn.close()
