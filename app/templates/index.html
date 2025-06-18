@@ -1,27 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <script defer>
-        const conn = (link) => {
-            fetch(link)
-                .then(response => {
-                    console.log("Response object:", response);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Parsed JSON data:", data);
-                })
-                .catch(error => {
-                    console.error("Error during fetch:", error);
-                });
-        }
 
+<head>
+    <script defer>
+        // const conn = (link) => {
+        //     fetch(link)
+        //         .then(response => {
+        //             console.log("Response object:", response);
+        //             return response.json();
+        //         })
+        //         .then(data => {
+        //             console.log("Parsed JSON data:", data);
+        //         })
+        //         .catch(error => {
+        //             console.error("Error during fetch:", error);
+        //         });
+        // }
     </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
 </head>
-<body>
-    <h1>Lol</h1>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="https://via.placeholder.com/40x40" alt="Logo" width="40" height="40">
+                </a>
+                <!-- For mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Collapsing navbar -->
+                <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+                    <!-- Title -->
+                    <span class="navbar-text mx-auto h4 mb-0">Title</span>
+                    <!-- Login -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Posts -->
+    <main class="container flex-grow-1">
+        <div class="row g-1">
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/600x400" class="card-img-top img-fluid" alt="Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Title</h5>
+                        <p class="card-text">Description...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-dark text-center text-white py-3 mt-auto">
+        Made by Maciej Grzesiak &copy;
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
